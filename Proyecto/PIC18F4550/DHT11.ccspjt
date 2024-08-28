@@ -1,0 +1,36 @@
+[PROJECT]
+Target=DHT11.hex
+Processor_Text=PIC18F4550
+CCSVersion=5.115
+Compiler=PCH
+[Target Data]
+FileList=DHT11.c
+[DHT11.c]
+Type=4
+[mru-list]
+1=DHT11.c
+
+[defines]
+buildcount=2
+
+[ProjectLog]
+Days=1
+D1=27-08-2024
+D1_L=3
+D1_L1=[77819]Started Editing.
+D1_L2=[77920]Stopped Editing.
+TotalEdit=2
+TotalDebug=0
+D1_E=2
+D1_D=0
+D1_L3=[77920]Project Closed.
+
+[Opened Files]
+1=DHT11.c
+t1=9
+Count=2
+2=dht_sensor.h
+t2=3
+[Units]
+Count=1
+1=DHT11 (main)

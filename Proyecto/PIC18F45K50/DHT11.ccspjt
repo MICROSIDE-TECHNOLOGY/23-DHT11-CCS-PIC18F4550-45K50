@@ -1,0 +1,38 @@
+[PROJECT]
+Target=DHT11.hex
+Processor_Text=PIC18F45K50
+CCSVersion=5.115
+Compiler=PCH
+[Target Data]
+FileList=DHT11.c
+[DHT11.c]
+Type=4
+[mru-list]
+1=DHT11.c
+
+[defines]
+buildcount=4
+
+[ProjectLog]
+Days=1
+D1=27-08-2024
+D1_L=3
+D1_L1=[75886]Started Editing.
+D1_L2=[77720]Stopped Editing.
+TotalEdit=31
+TotalDebug=0
+D1_E=31
+D1_D=0
+D1_L3=[77720]Project Closed.
+
+[Opened Files]
+1=flex_lcd.h
+t1=1
+2=dht_sensor.h
+t2=161
+Count=2
+3=dht_sensor.h
+t3=161
+[Units]
+Count=1
+1=DHT11 (main)

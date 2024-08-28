@@ -7,8 +7,9 @@ Driver Version    :  1.0
 ************************************************************************************************/
 /*
 ---------------------------------------------------------------------------
-Esta práctica consiste en imprimir un mensaje, a través de una
-pantalla LCD
+En esta práctica se implementa la lectura de un sensor de temperatura y
+humedad digital DHT11, los valores obtenidos se visualizan a través de un
+display LCD I2C.
 ---------------------------------------------------------------------------
 */
 
@@ -38,7 +39,7 @@ void main()
     lcd_i2c_write_byte( "DHT11" );
     lcd_i2c_setCursor( 3, 1 );
 
-    if ( dht11_init() != 0 ) {
+    if ( dht11_init() != 0 ) { // Inicializa el DHT11
         lcd_i2c_write_byte( "ERROR" );
         while ( 1 ) {
         }
@@ -49,9 +50,9 @@ void main()
 
     while ( 1 ) {
         delay_ms( 2000 );
-
+        // Lee el sensor DHT11
         dht11_stat = dht11_read( &temperature, &humidity );
-
+        // Cualquier valor diferente a 0 significa error en la lectura
         if ( dht11_stat != 0 ) {
             lcd_i2c_clear();
             lcd_i2c_setCursor( 0, 0 );

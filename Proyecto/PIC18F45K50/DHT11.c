@@ -15,14 +15,14 @@ display LCD I2C.
 
 #include <18F45K50.h>                          //Incluye el microcontrolador con el que se va a trabajar
 #use delay( internal = 48MHz )                 // Tipo de oscilador y frecuencia dependiendo del microcontrolador
-#use i2c( master, sda=PIN_B0, scl=PIN_B1 )
+#use i2c( master, sda = PIN_B0, scl = PIN_B1 )
 #build( reset = 0x02000, interrupt = 0x02008 ) // Asigna los vectores de reset e interrupción para la versión con bootloader
 #org 0x0000, 0x1FFF {}                         // Reserva espacio en memoria para el bootloader
 
 #define DHT11_PIN PIN_B2
 
-#include "flex_lcd.h"     //LIBRERIA LCD
 #include "dht_sensor.h"
+#include "flex_lcd.h"                          //LIBRERIA LCD
 
 float temperature = 0;
 float humidity = 0;
@@ -30,16 +30,16 @@ int dht11_stat = 0;
 
 void main()
 {
-   
+
     delay_ms( 1000 );
-    lcd_i2c_init( 0x27 );            // Inicializa la pantalla LCD
+    lcd_i2c_init( 0x27 );                      // Inicializa la pantalla LCD
 
     lcd_i2c_clear();
     lcd_i2c_setCursor( 3, 0 );
     lcd_i2c_write_byte( "DHT11" );
     lcd_i2c_setCursor( 3, 1 );
 
-    if ( dht11_init() != 0 ) {  // Inicializa el DHT11
+    if ( dht11_init() != 0 ) {                 // Inicializa el DHT11
         lcd_i2c_write_byte( "ERROR" );
         while ( 1 ) {
         }

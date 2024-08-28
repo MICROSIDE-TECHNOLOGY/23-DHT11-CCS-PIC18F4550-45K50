@@ -22,11 +22,11 @@ Instrucciones que controlan el sensor
 static inline void dht11_send_start()
 {
     output_drive( DHT11_PIN );
-    output_low(DHT11_PIN);
+    output_low( DHT11_PIN );
 
-    delay_ms( 20 );                  // Señal de inicio
+    delay_ms( 20 ); // Señal de inicio
 
-    output_high(DHT11_PIN);
+    output_high( DHT11_PIN );
     output_float( DHT11_PIN );
 
     delay_us( 1 );
@@ -48,8 +48,8 @@ int dht11_init()
     static uint8_t interrupt_status = 0;
     double tmp;
 
-    interrupt_status = interrupt_enabled(global);
-    disable_interrupts(global);
+    interrupt_status = interrupt_enabled( global );
+    disable_interrupts( global );
 
     dht11_send_start();
 
@@ -58,32 +58,31 @@ int dht11_init()
     while ( input( DHT11_PIN ) ) {
         if ( !pulse_lenght++ ) {
             if ( interrupt_status ) {
-               enable_interrupts(global);
+                enable_interrupts( global );
             }
             return -1;
         }
-            
     }
     pulse_lenght = 1;
     while ( !input( DHT11_PIN ) ) {
         if ( !pulse_lenght++ ) {
             if ( interrupt_status ) {
-               enable_interrupts(global);
+                enable_interrupts( global );
             }
             return -1;
         }
     }
 
     if ( interrupt_status ) {
-      enable_interrupts(global);
+        enable_interrupts( global );
     }
 
     // La respuesta del sensor es de 80uS, dividimos la cantidad
     // de incrementos del contador entre este valor para estimar
     // 1uS
-    tmp = pulse_lenght/80.0;
+    tmp = pulse_lenght / 80.0;
 
-    // 70uS = 1, 30 uS = 0, entonces pulsos > 50uS se consideran 1 
+    // 70uS = 1, 30 uS = 0, entonces pulsos > 50uS se consideran 1
     tmp = tmp * 40;
 
     __dht11_high_time = (dht11_pulse_counter_t)tmp;
@@ -116,8 +115,8 @@ int dht11_read( float *temp, float *hum )
     dht11_pulse_counter_t pulse_lenght = 1;
 
     // Deshabilita las interrupciones para calcular los intervalos de tiempo
-    interrupt_status = interrupt_enabled(global);
-    disable_interrupts(global);
+    interrupt_status = interrupt_enabled( global );
+    disable_interrupts( global );
 
     dht11_send_start();
 
@@ -167,11 +166,11 @@ int dht11_read( float *temp, float *hum )
 
     // Restablecer las interrupciones
     if ( interrupt_status ) {
-      enable_interrupts(global);
+        enable_interrupts( global );
     }
 
-    *hum = (float)(data[0] + ( data[1] * 0.1 ));
-    *temp = (data[2] + ( data[3] * 0.1 ));
+    *hum = (float)( data[0] + ( data[1] * 0.1 ) );
+    *temp = ( data[2] + ( data[3] * 0.1 ) );
 
     if ( data[4] != ( data[0] + data[1] + data[2] + data[3] ) )
         return data[4];
@@ -180,7 +179,7 @@ int dht11_read( float *temp, float *hum )
 
 timeout_error:
     if ( interrupt_status ) {
-      enable_interrupts(global);
+        enable_interrupts( global );
     }
     return -1;
 }

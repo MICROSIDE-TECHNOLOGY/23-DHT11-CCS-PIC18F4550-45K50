@@ -45,8 +45,8 @@ void lcd_i2c_write( uint8_t data );
 void lcd_i2c_write_instruction( uint8_t data );
 void lcd_i2c_write_byte( char data );
 void lcd_i2c_write_str( char theString[] );
-void lcd_i2c_write_int(int value);
-void lcd_i2c_write_double(double value, uint8_t decimals);
+void lcd_i2c_write_int( int value );
+void lcd_i2c_write_double( double value, uint8_t decimals );
 void lcd_i2c_Backlight( void );
 void lcd_i2c_noBacklight( void );
 void lcd_i2c_setCursor( uint8_t col, uint8_t row );
@@ -63,39 +63,39 @@ void lcd_i2c_setCursor( uint8_t col, uint8_t row );
 ********************************************************************************/
 void lcd_i2c_init( uint8_t address )
 {
-   __ADD = address;
-   // Secuencia de reinicio de la LCD de acuerdo con la hoja de datos
-   lcd_i2c_write( LCD_Reset );
-   delay_us( 4500 );
+    __ADD = address;
+    // Secuencia de reinicio de la LCD de acuerdo con la hoja de datos
+    lcd_i2c_write( LCD_Reset );
+    delay_us( 4500 );
 
-   lcd_i2c_write( LCD_Reset );
-   delay_us( 4500 );
+    lcd_i2c_write( LCD_Reset );
+    delay_us( 4500 );
 
-   lcd_i2c_write( LCD_Reset );
-   delay_us( 150 );
+    lcd_i2c_write( LCD_Reset );
+    delay_us( 150 );
 
-   // Inicia la LCD en modo de 8 bits
-   lcd_i2c_write( LCD_FunctionSet4bit );
-   delay_ms( 80 ); // Esta acción requiere de al menos 40 ms
+    // Inicia la LCD en modo de 8 bits
+    lcd_i2c_write( LCD_FunctionSet4bit );
+    delay_ms( 80 ); // Esta acción requiere de al menos 40 ms
 
-   lcd_i2c_write_instruction( LCD_FunctionSet4bit );
-   delay_ms( 80 ); // Esta acción requiere de al menos 80 ms
+    lcd_i2c_write_instruction( LCD_FunctionSet4bit );
+    delay_ms( 80 ); // Esta acción requiere de al menos 80 ms
 
-   // Parte 2 de la secuencia de inicio
-   lcd_i2c_write_instruction( LCD_DisplayOff ); // Apaga la pantalla LCD
+    // Parte 2 de la secuencia de inicio
+    lcd_i2c_write_instruction( LCD_DisplayOff ); // Apaga la pantalla LCD
 
-   // Limpia la pantalla LCD
-   lcd_i2c_clear();
+    // Limpia la pantalla LCD
+    lcd_i2c_clear();
 
-   // Modo de entrada de caracteres
-   lcd_i2c_write_instruction( LCD_EntryMode ); // Establece escritura de izquierda a derecha
+    // Modo de entrada de caracteres
+    lcd_i2c_write_instruction( LCD_EntryMode ); // Establece escritura de izquierda a derecha
 
-   // Con esto se termina la secuencia de inicio, pero deja la
-   // pantalla de la LCD apagada
+    // Con esto se termina la secuencia de inicio, pero deja la
+    // pantalla de la LCD apagada
 
-   lcd_i2c_write_instruction( LCD_DisplayOn ); // Enciende la pantalla LCD
+    lcd_i2c_write_instruction( LCD_DisplayOn ); // Enciende la pantalla LCD
 
-   return;
+    return;
 }
 
 /*******************************************************************************
@@ -108,8 +108,8 @@ void lcd_i2c_init( uint8_t address )
 ********************************************************************************/
 void lcd_i2c_clear()
 {
-   lcd_i2c_write_instruction( LCD_Clear );
-   delay_ms( 4 ); // Delay de 4 ms
+    lcd_i2c_write_instruction( LCD_Clear );
+    delay_ms( 4 ); // Delay de 4 ms
 }
 
 /*******************************************************************************
@@ -122,7 +122,7 @@ void lcd_i2c_clear()
 ********************************************************************************/
 void lcd_i2c_noBacklight()
 {
-   __LIGHT = 0;
+    __LIGHT = 0;
 }
 
 /*******************************************************************************
@@ -135,7 +135,7 @@ void lcd_i2c_noBacklight()
 ********************************************************************************/
 void lcd_i2c_Backlight()
 {
-   __LIGHT = LCD_LIGHT;
+    __LIGHT = LCD_LIGHT;
 }
 
 /*******************************************************************************
@@ -147,29 +147,29 @@ void lcd_i2c_Backlight()
 ********************************************************************************/
 void lcd_i2c_write( uint8_t data )
 {
-   // Prepara el estado de los pines que se van a leer
-   uint8_t payload = data | __LIGHT;
-   i2c_start();
-   i2c_write( __ADD << 1 );
-   i2c_write( payload );
-   i2c_stop();
-   delay_us( 1 );
+    // Prepara el estado de los pines que se van a leer
+    uint8_t payload = data | __LIGHT;
+    i2c_start();
+    i2c_write( __ADD << 1 );
+    i2c_write( payload );
+    i2c_stop();
+    delay_us( 1 );
 
-   // Escribe 1 en el pin EN de la LCD para comenzar la lectura de los 4 bits
-   payload = data | LCD_EN | __LIGHT;
-   i2c_start();
-   i2c_write( __ADD << 1 );
-   i2c_write( payload );
-   i2c_stop();
-   delay_us( 1 );
+    // Escribe 1 en el pin EN de la LCD para comenzar la lectura de los 4 bits
+    payload = data | LCD_EN | __LIGHT;
+    i2c_start();
+    i2c_write( __ADD << 1 );
+    i2c_write( payload );
+    i2c_stop();
+    delay_us( 1 );
 
-   // Escribe un 0 en el pin EN, para prepararla para la siguiente instruccion
-   payload = ( data & ~LCD_EN ) | __LIGHT;
-   i2c_start();
-   i2c_write( __ADD << 1 );
-   i2c_write( payload );
-   i2c_stop();
-   delay_us( 1 );
+    // Escribe un 0 en el pin EN, para prepararla para la siguiente instruccion
+    payload = ( data & ~LCD_EN ) | __LIGHT;
+    i2c_start();
+    i2c_write( __ADD << 1 );
+    i2c_write( payload );
+    i2c_stop();
+    delay_us( 1 );
 }
 
 /*******************************************************************************
@@ -185,13 +185,13 @@ void lcd_i2c_write( uint8_t data )
 ********************************************************************************/
 void lcd_i2c_write_instruction( uint8_t data )
 {
-   uint8_t MSHB = ( data & 0xF0 );
-   uint8_t LSHB = ( ( data << 4 ) & 0xF0 );
+    uint8_t MSHB = ( data & 0xF0 );
+    uint8_t LSHB = ( ( data << 4 ) & 0xF0 );
 
-   lcd_i2c_write( MSHB );
-   lcd_i2c_write( LSHB );
+    lcd_i2c_write( MSHB );
+    lcd_i2c_write( LSHB );
 
-   delay_us( 80 );
+    delay_us( 80 );
 }
 
 /*******************************************************************************
@@ -208,13 +208,13 @@ void lcd_i2c_write_instruction( uint8_t data )
 ********************************************************************************/
 void lcd_i2c_write_byte( char data )
 {
-   uint8_t MSHB = ( data & 0xF0 ) | LCD_RS;
-   uint8_t LSHB = ( ( data << 4 ) & 0xF0 ) | LCD_RS;
+    uint8_t MSHB = ( data & 0xF0 ) | LCD_RS;
+    uint8_t LSHB = ( ( data << 4 ) & 0xF0 ) | LCD_RS;
 
-   lcd_i2c_write( MSHB );
-   lcd_i2c_write( LSHB );
+    lcd_i2c_write( MSHB );
+    lcd_i2c_write( LSHB );
 
-   delay_us( 80 ); // 40 uS delay (min)
+    delay_us( 80 ); // 40 uS delay (min)
 }
 
 /*******************************************************************************
@@ -227,18 +227,18 @@ void lcd_i2c_write_byte( char data )
 
  retorna: no parametros
 ********************************************************************************/
-void lcd_i2c_write_double(double value, uint8_t decimals)
+void lcd_i2c_write_double( double value, uint8_t decimals )
 {
     int integer = 0;
     int decimal = 0;
     int decimal_shif = 1;
 
-    for ( uint8_t e_10 = 0; e_10 < decimals; e_10++ ){
+    for ( uint8_t e_10 = 0; e_10 < decimals; e_10++ ) {
         decimal_shif *= 10;
     }
 
     integer = (int)value;
-    decimal = (int)((value - (float)integer) * decimal_shif);
+    decimal = (int)( ( value - (float)integer ) * decimal_shif );
     if ( decimal < 0 )
         decimal = decimal * -1;
 
@@ -256,9 +256,9 @@ void lcd_i2c_write_double(double value, uint8_t decimals)
 
  retorna: no parametros
 ********************************************************************************/
-void lcd_i2c_write_int(int value)
+void lcd_i2c_write_int( int value )
 {
-    char buf[ 16 ] = {0};
+    char buf[16] = { 0 };
     uint8_t index = 0;
 
     if ( value < 0 ) {
@@ -267,18 +267,17 @@ void lcd_i2c_write_int(int value)
     }
 
     do {
-        buf[index] = '0' + (value % 10);
+        buf[index] = '0' + ( value % 10 );
         index++;
         value /= 10;
-    } while (value > 0);
+    } while ( value > 0 );
 
-    for ( uint8_t i = 1; i <= index; i++ ){
-        lcd_i2c_write_byte( buf[ index - i ] );
+    for ( uint8_t i = 1; i <= index; i++ ) {
+        lcd_i2c_write_byte( buf[index - i] );
     }
 
     return;
 }
-
 
 /*******************************************************************************
  Functión: lcd_i2c_setCursor
@@ -292,13 +291,13 @@ void lcd_i2c_write_int(int value)
 ********************************************************************************/
 void lcd_i2c_setCursor( uint8_t col, uint8_t row )
 {
-   static const uint8_t lineStartPosition[] = {
-       0x00, 0x40, 0x14, 0x54 };
-   // Evita leer una dirección fuera del arreglo
-   if ( row > 3 )
-      return;
+    static const uint8_t lineStartPosition[] = {
+        0x00, 0x40, 0x14, 0x54 };
+    // Evita leer una dirección fuera del arreglo
+    if ( row > 3 )
+        return;
 
-   lcd_i2c_write_instruction( LCD_SetCursor | ( col + lineStartPosition[row] ) );
+    lcd_i2c_write_instruction( LCD_SetCursor | ( col + lineStartPosition[row] ) );
 }
 
 #endif /* LCD_H */

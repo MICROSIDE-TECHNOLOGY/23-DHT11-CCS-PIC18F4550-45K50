@@ -11,26 +11,37 @@ Type=4
 1=DHT11.c
 
 [defines]
-buildcount=2
+buildcount=7
 
 [ProjectLog]
-Days=1
+Days=2
 D1=27-08-2024
 D1_L=3
 D1_L1=[77819]Started Editing.
 D1_L2=[77920]Stopped Editing.
-TotalEdit=2
+TotalEdit=5
 TotalDebug=0
 D1_E=2
 D1_D=0
 D1_L3=[77920]Project Closed.
+D2=01-09-2024
+D2_L=4
+D2_L1=[68969]Project Opened.
+D2_L2=[69156]Started Editing.
+D2_L3=[69325]Stopped Editing.
+D2_E=3
+D2_D=0
+D2_L4=[69325]Project Closed.
 
 [Opened Files]
 1=DHT11.c
-t1=9
+t1=24
 Count=2
 2=dht_sensor.h
-t2=3
+t2=1
+
+[fileformats]
+forcecoff=0
 [Units]
 Count=1
 1=DHT11 (main)

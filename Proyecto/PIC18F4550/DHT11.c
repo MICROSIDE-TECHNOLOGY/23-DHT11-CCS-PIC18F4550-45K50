@@ -14,7 +14,7 @@ display LCD I2C.
 */
 
 #include <18F4550.h>                           //Incluye el microcontrolador con el que se va a trabajar
-#use delay( clock = 48Mhz, crystal )           // Tipo de oscilador y frecuencia dependiendo del microcontrolador
+#use delay( clock = 48Mhz, crystal=20Mhz )           // Tipo de oscilador y frecuencia dependiendo del microcontrolador
 #use i2c( master, sda = PIN_B0, scl = PIN_B1 )
 #build( reset = 0x02000, interrupt = 0x02008 ) // Asignación de los vectores de reset e interrupción
 #org 0x0000, 0x1FFF {}                         // Reserva espacio en la memoria para la versión con bootloader
@@ -41,14 +41,13 @@ void main()
 
     if ( dht11_init() != 0 ) {                 // Inicializa el DHT11
         lcd_i2c_write_byte( "ERROR" );
-        while ( 1 ) {
+        while ( TRUE ) {
         }
     }
 
     lcd_i2c_write_byte( "OK" );
-    delay_ms( 1000 );
 
-    while ( 1 ) {
+    while ( TRUE ) {
         delay_ms( 2000 );
         // Lee el sensor DHT11
         dht11_stat = dht11_read( &temperature, &humidity );

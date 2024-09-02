@@ -6,7 +6,7 @@ Tipos de variables para la lectura del sensor
 
 typedef uint8_t dht11_pulse_counter_t;
 
-static dht11_pulse_counter_t __dht11_high_time = 40;
+static dht11_pulse_counter_t __dht11_high_time = 30;
 
 /*******************************************************************************
 Instrucciones que controlan el sensor
@@ -83,8 +83,8 @@ int dht11_init()
     // 1uS
     tmp = pulse_lenght/80.0;
 
-    // 70uS = 1, 30 uS = 0, entonces pulsos > 50uS se consideran 1 
-    tmp = tmp * 40;
+    // 70uS = 1, 30 uS = 0, entonces pulsos > 35uS se consideran 1 
+    tmp = tmp * 35;
 
     __dht11_high_time = (dht11_pulse_counter_t)tmp;
 

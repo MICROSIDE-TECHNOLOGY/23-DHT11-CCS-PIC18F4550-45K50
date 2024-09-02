@@ -1,1 +1,11 @@
 __history/
+*.bat
+*.cod
+*.cof
+*.err
+*.esym
+*.lst
+*.STA
+*.sym
+*.tre
+*.xsym
